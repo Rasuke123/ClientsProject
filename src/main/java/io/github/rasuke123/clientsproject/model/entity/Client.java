@@ -21,6 +21,10 @@ public class Client {
     @Column(name = "registration_date")
     private LocalDate dateRegistration;
 
+    public Client(){
+
+    }
+
 
     public Client(Integer id, String name, String TIN, LocalDate dateRegistration) {
         this.id = id;
@@ -59,5 +63,10 @@ public class Client {
 
     public void setDateRegistration(LocalDate dateRegistration) {
         this.dateRegistration = dateRegistration;
+    }
+
+    @PrePersist
+    public void prePersist(){
+        setDateRegistration(LocalDate.now());
     }
 }
