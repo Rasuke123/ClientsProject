@@ -1,7 +1,10 @@
 package io.github.rasuke123.clientsproject.model.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
@@ -13,12 +16,16 @@ public class Client {
     private Integer id;
 
     @Column(nullable=false, length=150)
+    @NotEmpty(message = "{field.name.mandatory}")
     private String name;
 
     @Column(nullable=false, length=11)
+    @NotNull(message = "{field.TIN.mandatory}")
+    @Pattern(regexp = "\\d{11}", message = "{field.TIN.invalid}")
     private String TIN; /// tax identification number
 
-    @Column(name = "registration_date")
+    @Column(name = "registration_date", updatable=false)
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dateRegistration;
 
     public Client(){
